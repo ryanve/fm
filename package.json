@@ -1,0 +1,21 @@
+{
+  "name": "fm",
+  "description": "function modulation",
+  "version": "0.0.0",
+  "homepage": "https://github.com/ryanve/fm",
+  "license": "MIT",
+  "author": "Ryan Van Etten",
+  "keywords": ["util", "function", "functions", "method", "bind", "partial", "ender"],
+  "main": "./fm.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ryanve/fm.git"
+  },
+  "devDependencies": {
+    "aok": "~1.8.0",
+    "grunt": "~0.4.2",
+    "grunt-contrib-uglify": "~0.3.0",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-jshint": "~0.8.0"
+  }
+}
