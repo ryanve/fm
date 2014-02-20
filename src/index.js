@@ -12,17 +12,17 @@
     
   /** 
    * @constructor
-   * @param {(Function|{length:number})=} fn
+   * @param {*=} fn value to wrap, or Fm instance to clone
    */
   function Fm(fn) {
-    push.apply(this, null == fn ? empty : typeof fn == 'object' ? slice.call(fn) : [fn])
-    return this
+    this.length = 1
+    this[0] = fn instanceof fm ? fn[0] : fn
   }
-  
+
   /** 
-   * @param {(Function|{length:number})=} fn
-   * @return {Fm}
-   */  
+   * @param {*=} fn value to wrap, or Fm instance to clone
+   * @return {Fm} an Fm instance whose length is 1
+   */
   function fm(fn) {
     return new Fm(fn)
   }

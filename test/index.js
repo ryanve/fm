@@ -5,10 +5,10 @@
   var join = fm.bind(fm.call, [].join)
   var keys = Object.keys
 
+  if (!keys) aok.prototype.express = aok.info // alert in IE8
   aok('instance', fm() instanceof fm)
-  aok('instance.length', 0 === fm().length && 1 === fm(fm).length && 2 === fm([0, 1]).length)
+  aok('instance.length', 1 === fm().length && 1 === fm(fm()).length)
   aok('keys', !keys || keys(fm).join() === keys(fm.prototype).join())
-  
   aok('constant(value)', 0 === fm.constant(0)(1))
   
   aok('bind(fn, scope)', function() {
