@@ -100,6 +100,10 @@
     }
   }
   
+  /** 
+   * @param {Function|string|number|{length:number}} callable
+   * @return {Function|Array}
+   */
   fm['slice'] = function(callable) {
     var rest = slice.call(arguments, 1, 3), late = typeof callable != 'function'
     return typeof callable != 'object' ? function() {
