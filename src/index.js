@@ -100,11 +100,10 @@
     }
   }
 
-  return mixin.call(fm, {
-      'bind': bind
-    , 'constant': constant
-    , 'got': got
-    , 'mixin': mixin
-    , 'partial': partial
-  })
+  fm['bind'] = bind
+  fm['constant'] = constant
+  fm['got'] = got
+  fm['mixin'] = mixin
+  fm['partial'] = partial
+  return fm['mixin'](fm)
 }));
