@@ -94,8 +94,9 @@
    * @return {Function}
    */
   function method(name) {
-    return function(a) {
-      push.apply(a = [this instanceof fm ? this[0] : this], arguments)
+    return function() {
+      var a = [this instanceof fm ? this[0] : this]
+      push.apply(a, arguments)
       return fm[name].apply(fm, a)
     }
   }

@@ -1,5 +1,5 @@
 /*!
- * fm 0.2.0+201402201035
+ * fm 0.2.0+201402201100
  * https://github.com/ryanve/fm
  * MIT License 2014 Ryan Van Etten
  */
@@ -100,8 +100,9 @@
    * @return {Function}
    */
   function method(name) {
-    return function(a) {
-      push.apply(a = [this instanceof fm ? this[0] : this], arguments)
+    return function() {
+      var a = [this instanceof fm ? this[0] : this]
+      push.apply(a, arguments)
       return fm[name].apply(fm, a)
     }
   }
