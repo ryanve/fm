@@ -21,12 +21,17 @@
 
   /** 
    * @param {*=} value to wrap or Fm instance to clone
-   * @return {Fm} an Fm instance whose length is 1
+   * @return {Fm} an Fm instance
    */
   function fm(value) {
     return new Fm(value)
   }
 
+  /** 
+   * @param {Function|string|number} callable
+   * @param {*=} scope
+   * @return {Function}
+   */
   function bind(callable, scope) {
     var rest = slice.call(arguments, 2), late = typeof callable != 'function'
     return rest.length || (rest=0) || late ? function() {
@@ -37,6 +42,10 @@
     }
   }
 
+  /** 
+   * @param {Function|string|number} callable
+   * @return {Function}
+   */
   function partial(callable) {
     var rest = slice.call(arguments, 1), late = typeof callable != 'function'
     return rest.length || (rest=0) || late ? function() {
@@ -47,12 +56,20 @@
     }
   }
   
+  /** 
+   * @param {*=} value
+   * @return {Function}
+   */
   function constant(value) {
     return function() {
       return value
     }
   }
   
+  /**
+   * @this {Object} receiver
+   * @param {Object} from
+   */
   function mixin(from) {
     var k, to = this, pro = typeof to == 'function' && to.prototype
     if (to == globe) throw new TypeError('@this')
@@ -65,6 +82,10 @@
     return this
   }
   
+  /** 
+   * @param {string|number} name
+   * @return {Function}
+   */
   function method(name) {
     return function(a) {
       push.apply(a = [this instanceof fm ? this[0] : this], arguments)
