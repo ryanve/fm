@@ -35,6 +35,16 @@ fm.prototype.partial.apply(callable, arguments)
 #### `fm(callable).partial(...arguments)`
 &rarr; function
 
+### .slice()
+#### `fm.slice(callable, begin?, end?)`
+#### `fm(callable).slice(begin?, end?)`
+&rarr; function
+
+### .got()
+#### `fm.got(...arguments)`
+#### `fm(head).got(...arguments)`
+&rarr; array
+
 ### .constant()
 #### `fm.constant(value)`
 #### `fm(value).constant()`
