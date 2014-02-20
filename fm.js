@@ -1,5 +1,5 @@
 /*!
- * fm 0.0.0+201402181240
+ * fm 0.1.0+201402200511
  * https://github.com/ryanve/fm
  * MIT License 2014 Ryan Van Etten
  */
@@ -18,47 +18,64 @@
     
   /** 
    * @constructor
-   * @param {(Function|{length:number})=} fn
+   * @param {*=} value to wrap or Fm instance to clone
    */
-  function Fm(fn) {
-    push.apply(this, null == fn ? empty : typeof fn == 'object' ? slice.call(fn) : [fn])
-    return this
+  function Fm(value) {
+    this.length = 1
+    this[0] = value instanceof fm ? value[0] : value
+  }
+
+  /** 
+   * @param {*=} value to wrap or Fm instance to clone
+   * @return {Fm} an Fm instance
+   */
+  function fm(value) {
+    return new Fm(value)
+  }
+
+  /** 
+   * @param {Function|string|number} callable
+   * @param {*=} scope
+   * @return {Function}
+   */
+  function bind(callable, scope) {
+    var rest = slice.call(arguments, 2), late = typeof callable != 'function'
+    return rest.length || (rest=0) || late ? function() {
+      var a = rest ? rest.slice() : [], f = late ? scope[callable] : callable
+      return push.apply(a, arguments) ? f.apply(scope, a) : f.call(scope)
+    } : function() {
+      return callable.apply(scope, arguments)
+    }
+  }
+
+  /** 
+   * @param {Function|string|number} callable
+   * @return {Function}
+   */
+  function partial(callable) {
+    var rest = slice.call(arguments, 1), late = typeof callable != 'function'
+    return rest.length || (rest=0) || late ? function() {
+      var a = rest ? rest.slice() : [], f = late ? this[callable] : callable
+      return push.apply(a, arguments) ? f.apply(this, a) : f.call(this)
+    } : function() {
+      return callable.apply(this, arguments)
+    }
   }
   
   /** 
-   * @param {(Function|{length:number})=} fn
-   * @return {Fm}
-   */  
-  function fm(fn) {
-    return new Fm(fn)
-  }
-
-  function bind(fn, scope) {
-    var rest = slice.call(arguments, 2), late = typeof fn != 'function'
-    return rest.length || (rest=0) || late ? function() {
-      var f = late ? scope[fn] : fn, a = rest ? rest.slice() : []
-      return push.apply(a, arguments) ? f.apply(scope, a) : f.call(scope)
-    } : function() {
-      return fn.apply(scope, arguments)
-    }
-  }
-
-  function partial(fn) {
-    var rest = slice.call(arguments, 1), late = typeof fn != 'function'
-    return rest.length || (rest=0) || late ? function() {
-      var f = late ? this[fn] : fn, a = rest ? rest.slice() : []
-      return push.apply(a, arguments) ? f.apply(this, a) : f.call(this)
-    } : function() {
-      return fn.apply(this, arguments)
-    }
-  }
-  
-  function constant(v) {
+   * @param {*=} value
+   * @return {Function}
+   */
+  function constant(value) {
     return function() {
-      return v
+      return value
     }
   }
   
+  /**
+   * @this {Object} receiver
+   * @param {Object} from
+   */
   function mixin(from) {
     var k, to = this, pro = typeof to == 'function' && to.prototype
     if (to == globe) throw new TypeError('@this')
@@ -71,6 +88,10 @@
     return this
   }
   
+  /** 
+   * @param {string|number} name
+   * @return {Function}
+   */
   function method(name) {
     return function(a) {
       push.apply(a = [this instanceof fm ? this[0] : this], arguments)
