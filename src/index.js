@@ -12,44 +12,44 @@
     
   /** 
    * @constructor
-   * @param {*=} fn value to wrap, or Fm instance to clone
+   * @param {*=} value to wrap or Fm instance to clone
    */
-  function Fm(fn) {
+  function Fm(value) {
     this.length = 1
-    this[0] = fn instanceof fm ? fn[0] : fn
+    this[0] = value instanceof fm ? value[0] : value
   }
 
   /** 
-   * @param {*=} fn value to wrap, or Fm instance to clone
+   * @param {*=} value to wrap or Fm instance to clone
    * @return {Fm} an Fm instance whose length is 1
    */
-  function fm(fn) {
-    return new Fm(fn)
+  function fm(value) {
+    return new Fm(value)
   }
 
-  function bind(fn, scope) {
-    var rest = slice.call(arguments, 2), late = typeof fn != 'function'
+  function bind(callable, scope) {
+    var rest = slice.call(arguments, 2), late = typeof callable != 'function'
     return rest.length || (rest=0) || late ? function() {
-      var f = late ? scope[fn] : fn, a = rest ? rest.slice() : []
+      var a = rest ? rest.slice() : [], f = late ? scope[callable] : callable
       return push.apply(a, arguments) ? f.apply(scope, a) : f.call(scope)
     } : function() {
-      return fn.apply(scope, arguments)
+      return callable.apply(scope, arguments)
     }
   }
 
-  function partial(fn) {
-    var rest = slice.call(arguments, 1), late = typeof fn != 'function'
+  function partial(callable) {
+    var rest = slice.call(arguments, 1), late = typeof callable != 'function'
     return rest.length || (rest=0) || late ? function() {
-      var f = late ? this[fn] : fn, a = rest ? rest.slice() : []
+      var a = rest ? rest.slice() : [], f = late ? this[callable] : callable
       return push.apply(a, arguments) ? f.apply(this, a) : f.call(this)
     } : function() {
-      return fn.apply(this, arguments)
+      return callable.apply(this, arguments)
     }
   }
   
-  function constant(v) {
+  function constant(value) {
     return function() {
-      return v
+      return value
     }
   }
   
