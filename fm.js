@@ -1,5 +1,5 @@
 /*!
- * fm 0.1.0+201402200511
+ * fm 0.2.0+201402201035
  * https://github.com/ryanve/fm
  * MIT License 2014 Ryan Van Etten
  */
@@ -73,6 +73,13 @@
   }
   
   /**
+   * @return {Array}
+   */
+  function got() {
+    return slice.call(arguments)
+  }
+
+  /**
    * @this {Object} receiver
    * @param {Object} from
    */
@@ -98,11 +105,22 @@
       return fm[name].apply(fm, a)
     }
   }
+  
+  /** 
+   * @param {Function|string|number|{length:number}} callable
+   * @return {Function|Array}
+   */
+  fm['slice'] = function(callable) {
+    var rest = slice.call(arguments, 1, 3), late = typeof callable != 'function'
+    return typeof callable != 'object' ? function() {
+      return (late ? this[callable] : callable).apply(this, slice.apply(arguments, rest))
+    } : slice.apply(callable, rest)
+  }
 
-  return mixin.call(fm, {
-      'bind': bind
-    , 'constant': constant
-    , 'mixin': mixin
-    , 'partial': partial
-  })
+  fm['bind'] = bind
+  fm['constant'] = constant
+  fm['got'] = got
+  fm['mixin'] = mixin
+  fm['partial'] = partial
+  return fm['mixin'](fm)
 }));
