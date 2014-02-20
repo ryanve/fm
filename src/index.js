@@ -67,6 +67,13 @@
   }
   
   /**
+   * @return {Array}
+   */
+  function got() {
+    return slice.call(arguments)
+  }
+
+  /**
    * @this {Object} receiver
    * @param {Object} from
    */
@@ -96,6 +103,7 @@
   return mixin.call(fm, {
       'bind': bind
     , 'constant': constant
+    , 'got': got
     , 'mixin': mixin
     , 'partial': partial
   })
