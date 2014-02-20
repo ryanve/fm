@@ -99,6 +99,13 @@
       return fm[name].apply(fm, a)
     }
   }
+  
+  fm['slice'] = function(callable) {
+    var rest = slice.call(arguments, 1, 3), late = typeof callable != 'function'
+    return typeof callable != 'object' ? function() {
+      return (late ? this[callable] : callable).apply(this, slice.apply(arguments, rest))
+    } : slice.apply(callable, rest)
+  }
 
   fm['bind'] = bind
   fm['constant'] = constant

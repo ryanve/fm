@@ -35,4 +35,8 @@
   aok('partial(fn, ...args)', function() {
     return '0,1,2,3' === fm.partial(fm.got, 0, 1)(2, 3).join()
   })
+  
+  aok('slice(fn)', '0,1' === fm.slice(fm.got)(0, 1).join())
+  aok('slice(fn, start)', '1,2' === fm.slice(fm.got, 1)(0, 1, 2).join())
+  aok('slice(fn, start, end)', '1' === fm.slice(fm.got, 1, -1)(0, 1, 2).join())
 }(this));
