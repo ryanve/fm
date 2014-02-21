@@ -8,7 +8,9 @@
 <a name="methods"></a>
 - [<b>.bind()</b>](#bind)
 - [<b>.partial()</b>](#partial)
+- [<b>.slice()</b>](#slice)
 - [<b>.constant()</b>](#constant)
+- [<b>.got()</b>](#got)
 - [<b>.mixin()</b>](#mixin)
 
 * * *
@@ -40,15 +42,15 @@ fm.prototype.partial.apply(callable, arguments)
 #### `fm(callable).slice(begin?, end?)`
 &rarr; function
 
-### .got()
-#### `fm.got(...arguments)`
-#### `fm(head).got(...arguments)`
-&rarr; array
-
 ### .constant()
 #### `fm.constant(value)`
 #### `fm(value).constant()`
 &rarr; function
+
+### .got()
+#### `fm.got(...arguments)`
+#### `fm(head).got(...arguments)`
+&rarr; array
 
 ### .mixin()
 #### `fm.mixin(object)`
