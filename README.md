@@ -3,7 +3,7 @@
 [<b>npm</b>: fm](https://www.npmjs.org/package/fm)
 
 <a name="api"></a>
-## API ([0.1](../../releases))
+## API ([0.2](../../releases))
 
 <a name="methods"></a>
 - [<b>.bind()</b>](#bind)
