@@ -1,7 +1,7 @@
 {
   "name": "fm",
   "description": "function modulation utility module",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "homepage": "https://github.com/ryanve/fm",
   "license": "MIT",
   "author": "Ryan Van Etten",
