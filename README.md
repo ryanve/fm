@@ -30,31 +30,61 @@ fm.prototype.partial.apply(callable, arguments)
 ### .bind()
 #### `fm.bind(callable, scope, ...arguments)`
 #### `fm(callable).bind(scope, ...arguments)`
-&rarr; function
+&rarr; <b>function</b> calls <var>callable</var> with `this` binded to <var>scope</var>, and prepends leading <var>arguments</var>
+
+```js
+fm.bind(callable, scope) // basic bind
+fm.bind(callable, scope, 'a', 'b', 'c') // bind with partial arguments
+```
 
 ### .partial()
 #### `fm.partial(callable, ...arguments)`
 #### `fm(callable).partial(...arguments)`
-&rarr; function
+&rarr; <b>function</b> that calls <var>callable</var> with dynamic `this`, and prepends leading <var>arguments</var>
+
+```js
+fm.partial(fm.got, 'a', 'b')('c') // => ['a', 'b', 'c']
+fm.partial('got', 'a', 'b').call(fm, 'c') // => ['a', 'b', 'c']
+fm.prototype.partial.apply(callable, array) // useful for array partials
+```
 
 ### .slice()
 #### `fm.slice(callable, begin?, end?)`
 #### `fm(callable).slice(begin?, end?)`
-&rarr; function
+&rarr; <b>function</b> that calls <var>callable</var> with dynamic `this`, and `arguments` sliced by `[].slice`
+
+```js
+fm.slice(callable, 0, 2) // => function that accepts only 2 args
+fm.slice(fm.bind, 0, 2) // => version of .bind that ignores extra arguments
+fm.slice(fm.got, 1)('a', 'b', 'c') // => ['b', 'c']
+fm.slice(fm.got, -2)('a', 'b', 'c') // => ['b', 'c']
+fm.slice(fm.got, 1, 2)('a', 'b', 'c') // => ['b']
+```
 
 ### .constant()
 #### `fm.constant(value)`
 #### `fm(value).constant()`
-&rarr; function
+&rarr; <b>function</b> that always returns <var>value</var> regardless of context or arguments
+
+```js
+fm.constant() // => noop function
+fm.constant()() // => undefined
+fm.constant(true)() // => true
+```
 
 ### .got()
 #### `fm.got(...arguments)`
 #### `fm(head).got(...arguments)`
-&rarr; array
+&rarr; <b>array</b> of arguments received
+
+```js
+fm.got() // => []
+fm.got(0, 1, 2) // => [0, 1, 2]
+```
 
 ### .mixin()
 #### `fm.mixin(object)`
-&rarr; this
+&rarr; <b>this</b>
 
 ## Compatibility
 
