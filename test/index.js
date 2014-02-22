@@ -40,6 +40,7 @@
   aok('#slice(f)', '0,1' === fm.slice(fm.got)(0, 1).join())
   aok('#slice(f, start)', '1,2' === fm.slice(fm.got, 1)(0, 1, 2).join())
   aok('#slice(f, start, end)', '1' === fm.slice(fm.got, 1, -1)(0, 1, 2).join())
+  aok('#slice(o, start, end)', '1' === fm.slice([0, 1, 2], 1, -1).join())
   aok('(f).slice()', '0,1,2' === fm(fm.got).slice()(0, 1, 2).join())
   aok('(f).slice(start)', '1,2' === fm(fm.got).slice(1)(0, 1, 2).join())
   aok('(m).slice(start)', '1,2' === fm('got').slice(1).call(fm, 0, 1, 2).join())
