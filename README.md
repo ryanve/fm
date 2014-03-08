@@ -3,9 +3,10 @@
 [<b>npm</b>: fm](https://www.npmjs.org/package/fm)
 
 <a name="api"></a>
-## API ([0.2](../../releases))
+## API ([0.3](../../releases))
 
 <a name="methods"></a>
+- [<b>.late()</b>](#late)
 - [<b>.bind()</b>](#bind)
 - [<b>.partial()</b>](#partial)
 - [<b>.slice()</b>](#slice)
@@ -27,10 +28,20 @@ fm(callable).partial(...arguments)
 fm.prototype.partial.apply(callable, arguments)
 ```
 
+### .late()
+#### `fm.late(method)`
+#### `fm(method).late()`
+&rarr; <b>function</b> that calls `this[method]`
+
+```js
+fm.late('yes').call({ yes:function() { return 1 } }) // => 1
+fm.late(0).call([function() { return this.length }]) // => 1
+```
+
 ### .bind()
 #### `fm.bind(callable, scope, ...arguments)`
 #### `fm(callable).bind(scope, ...arguments)`
-&rarr; <b>function</b> calls <var>callable</var> with `this` binded to <var>scope</var>, and prepends leading <var>arguments</var>
+&rarr; <b>function</b> that calls <var>callable</var> with `this` binded to <var>scope</var>, and prepends leading <var>arguments</var>
 
 ```js
 fm.bind(callable, scope) // basic bind
