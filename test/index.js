@@ -15,6 +15,9 @@
   aok('.got', '0,1' === fm(0).got(1).join())
   aok('#constant', 0 === fm.constant(0)(1))
   aok('.constant', 2 === +fm(2).constant()(1))
+  aok('#late(method)', 1 === fm.late(0).call([fm.constant(1)]))
+  aok('#late(function)', fm.late === fm.late(fm.late))
+  aok('.late()', fm.late === fm('late').late().call(fm, fm.late))
   
   aok('#bind(f, scope)', function() {
     var bool, o = {}

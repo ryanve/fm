@@ -57,6 +57,16 @@
   }
   
   /** 
+   * @param {Function|string|number} method
+   * @return {Function}
+   */
+  function late(method) {
+    return typeof method == 'function' ? method : function() {
+      return this[method].apply(this, arguments)
+    }
+  }
+  
+  /** 
    * @param {*=} value
    * @return {Function}
    */
@@ -117,6 +127,7 @@
   fm['bind'] = bind
   fm['constant'] = constant
   fm['got'] = got
+  fm['late'] = late
   fm['mixin'] = mixin
   fm['partial'] = partial
   return fm['mixin'](fm)
