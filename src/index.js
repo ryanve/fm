@@ -33,12 +33,13 @@
    * @return {Function}
    */
   function bind(callable, scope) {
-    var rest = slice.call(arguments, 2), late = typeof callable != 'function'
-    return rest.length || (rest=0) || late ? function() {
-      var a = rest ? rest.slice() : [], f = late ? scope[callable] : callable
-      return push.apply(a, arguments) ? f.apply(scope, a) : f.call(scope)
+    var f = late(callable), rest = slice.call(arguments, 2)
+    return rest.length ? function() {
+      var a = rest.slice()
+      push.apply(a, arguments)
+      return f.apply(scope, a)
     } : function() {
-      return callable.apply(scope, arguments)
+      return f.apply(scope, arguments)
     }
   }
 
