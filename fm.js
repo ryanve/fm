@@ -1,5 +1,5 @@
 /*!
- * fm 0.2.1+201402220323
+ * fm 0.3.0+201403080914
  * https://github.com/ryanve/fm
  * MIT License 2014 Ryan Van Etten
  */
@@ -59,6 +59,16 @@
       return push.apply(a, arguments) ? f.apply(this, a) : f.call(this)
     } : function() {
       return callable.apply(this, arguments)
+    }
+  }
+  
+  /** 
+   * @param {Function|string|number} method
+   * @return {Function}
+   */
+  function late(method) {
+    return typeof method == 'function' ? method : function() {
+      return this[method].apply(this, arguments)
     }
   }
   
@@ -123,6 +133,7 @@
   fm['bind'] = bind
   fm['constant'] = constant
   fm['got'] = got
+  fm['late'] = late
   fm['mixin'] = mixin
   fm['partial'] = partial
   return fm['mixin'](fm)
