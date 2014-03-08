@@ -47,13 +47,14 @@
    * @return {Function}
    */
   function partial(callable) {
-    var rest = slice.call(arguments, 1), late = typeof callable != 'function'
-    return rest.length || (rest=0) || late ? function() {
-      var a = rest ? rest.slice() : [], f = late ? this[callable] : callable
-      return push.apply(a, arguments) ? f.apply(this, a) : f.call(this)
-    } : function() {
-      return callable.apply(this, arguments)
-    }
+    var f = late(callable), rest = slice.call(arguments, 1)
+    return rest.length ? function() {
+      var a = rest.slice()
+      push.apply(a, arguments)
+      return f.apply(this, a)
+    } : f === callable ? function() {
+      return f.apply(this, arguments)
+    } : f
   }
   
   /** 
