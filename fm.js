@@ -1,5 +1,5 @@
 /*!
- * fm 0.3.0+201403080914
+ * fm 0.3.1+201403081041
  * https://github.com/ryanve/fm
  * MIT License 2014 Ryan Van Etten
  */
@@ -39,12 +39,13 @@
    * @return {Function}
    */
   function bind(callable, scope) {
-    var rest = slice.call(arguments, 2), late = typeof callable != 'function'
-    return rest.length || (rest=0) || late ? function() {
-      var a = rest ? rest.slice() : [], f = late ? scope[callable] : callable
-      return push.apply(a, arguments) ? f.apply(scope, a) : f.call(scope)
+    var f = late(callable), rest = slice.call(arguments, 2)
+    return rest.length ? function() {
+      var a = rest.slice()
+      push.apply(a, arguments)
+      return f.apply(scope, a)
     } : function() {
-      return callable.apply(scope, arguments)
+      return f.apply(scope, arguments)
     }
   }
 
@@ -53,13 +54,14 @@
    * @return {Function}
    */
   function partial(callable) {
-    var rest = slice.call(arguments, 1), late = typeof callable != 'function'
-    return rest.length || (rest=0) || late ? function() {
-      var a = rest ? rest.slice() : [], f = late ? this[callable] : callable
-      return push.apply(a, arguments) ? f.apply(this, a) : f.call(this)
-    } : function() {
-      return callable.apply(this, arguments)
-    }
+    var f = late(callable), rest = slice.call(arguments, 1)
+    return rest.length ? function() {
+      var a = rest.slice()
+      push.apply(a, arguments)
+      return f.apply(this, a)
+    } : f === callable ? function() {
+      return f.apply(this, arguments)
+    } : f
   }
   
   /** 
