@@ -1,22 +1,25 @@
-# [fm](../../)
+# fm
 #### JavaScript [function modulation](#api) utility module
-[<b>npm</b>: fm](https://www.npmjs.org/package/fm)
+
+```sh
+$ npm install fm --save
+```
 
 <a name="api"></a>
-## API ([0.3](../../releases))
+## API ([0.4](../../releases))
 
 <a name="methods"></a>
 - [<b>.late()</b>](#late)
 - [<b>.bind()</b>](#bind)
 - [<b>.partial()</b>](#partial)
 - [<b>.slice()</b>](#slice)
+- [<b>.stat()</b>](#stat)
 - [<b>.constant()</b>](#constant)
 - [<b>.got()</b>](#got)
 - [<b>.mixin()</b>](#mixin)
 
 * * *
 - methods can be used statically or via [OO syntax](#oo)
-- <var>callable</var> can be a <b>function</b> or <b>method name</b>
 
 <a name="oo"></a>
 ### fm()
@@ -24,8 +27,9 @@
 ##### `fm()` inherits from `fm.prototype`
 
 ```js
-fm(callable).partial(...arguments)
-fm.prototype.partial.apply(callable, arguments)
+var fm = require('fm')
+fm(callback).partial(...arguments)
+fm.prototype.partial.apply(callback, arguments)
 ```
 
 ### .late()
@@ -39,37 +43,48 @@ fm.late(0).call([function() { return this.length }]) // => 1
 ```
 
 ### .bind()
-#### `fm.bind(callable, scope, ...arguments)`
-#### `fm(callable).bind(scope, ...arguments)`
-&rarr; <b>function</b> that calls <var>callable</var> with `this` binded to <var>scope</var>, and prepends leading <var>arguments</var>
+#### `fm.bind(callback, scope, ...arguments)`
+#### `fm(callback).bind(scope, ...arguments)`
+&rarr; <b>function</b> that calls <var>callback</var> with `this` binded to <var>scope</var>, and prepends leading <var>arguments</var>
 
 ```js
-fm.bind(callable, scope) // basic bind
-fm.bind(callable, scope, 'a', 'b', 'c') // bind with partial arguments
+fm.bind(callback, scope) // basic bind
+fm.bind(callback, scope, 'a', 'b', 'c') // bind with partial arguments
 ```
 
 ### .partial()
-#### `fm.partial(callable, ...arguments)`
-#### `fm(callable).partial(...arguments)`
-&rarr; <b>function</b> that calls <var>callable</var> with dynamic `this`, and prepends leading <var>arguments</var>
+#### `fm.partial(callback, ...arguments)`
+#### `fm(callback).partial(...arguments)`
+&rarr; <b>function</b> that calls <var>callback</var> with dynamic `this`, and prepends leading <var>arguments</var>
 
 ```js
 fm.partial(fm.got, 'a', 'b')('c') // => ['a', 'b', 'c']
 fm.partial('got', 'a', 'b').call(fm, 'c') // => ['a', 'b', 'c']
-fm.prototype.partial.apply(callable, array) // useful for array partials
+fm.prototype.partial.apply(callback, array) // useful for array partials
 ```
 
 ### .slice()
-#### `fm.slice(callable, begin?, end?)`
-#### `fm(callable).slice(begin?, end?)`
-&rarr; <b>function</b> that calls <var>callable</var> with dynamic `this`, and `arguments` sliced by `[].slice`
+#### `fm.slice(callback, begin?, end?)`
+#### `fm(callback).slice(begin?, end?)`
+&rarr; <b>function</b> that calls <var>callback</var> with dynamic `this`, and `arguments` sliced by `[].slice`
 
 ```js
-fm.slice(callable, 0, 2) // => function that accepts only 2 args
+fm.slice(function(a, b, c) {}, 0, 2) // => new function that accepts only 2 args
 fm.slice(fm.bind, 0, 2) // => version of .bind that ignores extra arguments
 fm.slice(fm.got, 1)('a', 'b', 'c') // => ['b', 'c']
 fm.slice(fm.got, -2)('a', 'b', 'c') // => ['b', 'c']
 fm.slice(fm.got, 1, 2)('a', 'b', 'c') // => ['b']
+```
+
+### .stat()
+#### `fm.stat(method)`
+#### `fm(method).stat()`
+- Convert an instance method into a static one.
+&rarr; <b>function</b>
+
+```js
+fm.stat([].slice) // => static slice() function
+fm.stat({}.hasOwnProperty) // => static has() function
 ```
 
 ### .constant()
@@ -98,7 +113,6 @@ fm.got(0, 1, 2) // => [0, 1, 2]
 &rarr; <b>this</b>
 
 ## Compatibility
-
 Works...everywhere<b>!</b> Tested in node, Chrome, FF, Opera, IE
 
 ## Contribute
@@ -106,8 +120,8 @@ Make edits in [/<b>src</b>](./src). Run [tests](test) in [node](#cli) or in the 
 
 <a name="cli"></a>
 ```sh
-$ npm install # install devDependencies
-$ grunt jshint:sub # lint sub dirs
+$ npm install -g grunt-cli # install grunt-cli if you haven't already
+$ npm install # install devDependencies from package.json
 $ grunt test # run tests
 ```
 
@@ -115,4 +129,4 @@ $ grunt test # run tests
 <b>[Tip the developer](https://www.gittip.com/ryanve/)</b> =)
 
 ## License
-[MIT](fm.js#L4)
+MIT
