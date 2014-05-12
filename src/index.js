@@ -139,5 +139,6 @@
   fm['late'] = late
   fm['mixin'] = mixin
   fm['partial'] = partial
+  fm['stat'] = partial(bind, fm.call)
   return fm['mixin'](fm)
 }));

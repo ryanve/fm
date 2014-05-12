@@ -43,4 +43,14 @@
   aok('#slice(f, start, end)', '1' === fm.slice(fm.got, 1, -1)(0, 1, 2).join())
   aok('(f).slice()', '0,1,2' === fm(fm.got).slice()(0, 1, 2).join())
   aok('(f).slice(start)', '1,2' === fm(fm.got).slice(1)(0, 1, 2).join())
+  
+  aok('#stat', function() {
+    var a = [0, 1, 2, 3, 4]
+    return a.slice(1, 3).join() === fm.stat(a.slice)(a, 1, 3).join()
+  })
+  
+  aok('.stat', function() {
+    var a = [0, 1, 2, 3, 4]
+    return a.slice(1, 3).join() === fm(a.slice).stat()(a, 1, 3).join()
+  })
 }(this));
