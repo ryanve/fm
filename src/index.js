@@ -1,5 +1,5 @@
-(function(root, name, make) {
-  if (typeof module != 'undefined' && module['exports']) module['exports'] = make();
+!function(root, name, make) {
+  if (typeof module != 'undefined' && module.exports) module.exports = make();
   else root[name] = make();
 }(this, 'fm', function() {
 
@@ -141,4 +141,4 @@
   fm['partial'] = partial
   fm['stat'] = partial(bind, fm.call)
   return fm['mixin'](fm)
-}));
+});

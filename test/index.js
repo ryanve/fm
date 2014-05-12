@@ -1,4 +1,4 @@
-(function(root) {
+!function(root) {
   var common = typeof module != 'undefined' && !!module.exports
   var aok = common ? require('../node_modules/aok') : root.aok
   var fm = common ? require('../src') : root.fm
@@ -28,7 +28,7 @@
   
   aok('#bind(f, scope, ...args)', function() {
     var bool, o = {}
-    fm.bind(function() { 
+    fm.bind(function() {
       bool = this === o && join(arguments) === '0,1,2,3'
     }, o, 0, 1)(2, 3)
     return bool
@@ -53,4 +53,4 @@
     var a = [0, 1, 2, 3, 4]
     return a.slice(1, 3).join() === fm(a.slice).stat()(a, 1, 3).join()
   })
-}(this));
+}(this);
