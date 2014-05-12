@@ -26,15 +26,24 @@
   function fm(value) {
     return new Fm(value)
   }
+  
+  /** 
+   * @param {Function} f
+   * @param {Array|Arguments} a
+   * @return {Array|undefined}
+   */
+  function extra(f, a) {
+    if (a.length > f.length) return slice.call(a, f.length)
+  }
 
   /** 
-   * @param {Function|string|number} callable
+   * @param {Function} f
    * @param {*=} scope
    * @return {Function}
    */
-  function bind(callable, scope) {
-    var f = late(callable), rest = slice.call(arguments, 2)
-    return rest.length ? function() {
+  function bind(f, scope) {
+    var rest = extra(bind, arguments)
+    return rest ? function() {
       var a = rest.slice()
       push.apply(a, arguments)
       return f.apply(scope, a)
@@ -44,22 +53,22 @@
   }
 
   /** 
-   * @param {Function|string|number} callable
+   * @param {Function} f
    * @return {Function}
    */
-  function partial(callable) {
-    var f = late(callable), rest = slice.call(arguments, 1)
-    return rest.length ? function() {
+  function partial(f) {
+    var rest = extra(partial, arguments)
+    return rest ? function() {
       var a = rest.slice()
       push.apply(a, arguments)
       return f.apply(this, a)
-    } : f === callable ? function() {
+    } : function() {
       return f.apply(this, arguments)
-    } : f
+    }
   }
   
   /** 
-   * @param {Function|string|number} method
+   * @param {*} method name
    * @return {Function}
    */
   function late(method) {
@@ -114,16 +123,14 @@
   }
   
   /** 
-   * @param {Function|string|number|{length:number}} callable
-   * @return {Function|Array}
+   * @param {Function} f
+   * @return {Function}
    */
-  fm['slice'] = function(callable) {
+  fm['slice'] = function(f) {
     var rest = slice.call(arguments, 1, 3)
-    return typeof callable == 'function' ? function() {
-      return callable.apply(this, slice.apply(arguments, rest))
-    } : typeof callable != 'object' ? function() {
-      return this[callable].apply(this, slice.apply(arguments, rest))
-    } : slice.apply(callable, rest)
+    return function() {
+      return f.apply(this, slice.apply(arguments, rest))
+    }
   }
 
   fm['bind'] = bind
