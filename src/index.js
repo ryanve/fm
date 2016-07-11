@@ -104,9 +104,10 @@
    * @param {Object} from
    */
   function mixin(from) {
-    var k, to = this, pro = typeof to == 'function' && to.prototype
+    var to = this
+    var pro = typeof to == 'function' && to.prototype
     if (to == globe) throw new TypeError('@this')
-    for (k in from) {
+    for (var k in from) {
       if (owns.call(from, k)) {
         to[k] = from[k]
         if (pro) pro[k] = mixin === from[k] ? mixin : method(k)
