@@ -6,7 +6,7 @@ $ npm install fm --save
 ```
 
 <a name="api"></a>
-## API ([0.4](../../releases))
+## API
 
 <a name="methods"></a>
 - [<b>.late()</b>](#late)

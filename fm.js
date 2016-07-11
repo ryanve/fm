@@ -1,7 +1,7 @@
 /*!
- * fm 0.4.0+201405122000
+ * fm 0.5.0+201607112202
  * https://github.com/ryanve/fm
- * MIT License (c) 2014 Ryan Van Etten
+ * @license MIT
  */
 !function(root, name, make) {
   if (typeof module != 'undefined' && module.exports) module.exports = make();
@@ -10,10 +10,9 @@
 
   fm.prototype = Fm.prototype
   var globe = this
-    , empty = []
-    , slice = empty.slice
-    , push = empty.push
-    , owns = empty.hasOwnProperty
+    , slice = [].slice
+    , push = [].push
+    , owns = {}.hasOwnProperty
     
   /** 
    * @constructor
@@ -40,6 +39,16 @@
   function extra(f, a) {
     if (a.length > f.length) return slice.call(a, f.length)
   }
+  
+  /** 
+   * @param {Array} a
+   * @param {Array|Arguments} args
+   * @return {Array}
+   */
+  function append(a, args) {
+    push.apply(a = a.slice(), args)
+    return a
+  }
 
   /** 
    * @param {Function} f
@@ -49,9 +58,7 @@
   function bind(f, scope) {
     var rest = extra(bind, arguments)
     return rest ? function() {
-      var a = rest.slice()
-      push.apply(a, arguments)
-      return f.apply(scope, a)
+      return f.apply(scope, append(rest, arguments))
     } : function() {
       return f.apply(scope, arguments)
     }
@@ -64,9 +71,7 @@
   function partial(f) {
     var rest = extra(partial, arguments)
     return rest ? function() {
-      var a = rest.slice()
-      push.apply(a, arguments)
-      return f.apply(this, a)
+      return f.apply(this, append(rest, arguments))
     } : function() {
       return f.apply(this, arguments)
     }
@@ -104,9 +109,10 @@
    * @param {Object} from
    */
   function mixin(from) {
-    var k, to = this, pro = typeof to == 'function' && to.prototype
+    var to = this
+    var pro = typeof to == 'function' && to.prototype
     if (to == globe) throw new TypeError('@this')
-    for (k in from) {
+    for (var k in from) {
       if (owns.call(from, k)) {
         to[k] = from[k]
         if (pro) pro[k] = mixin === from[k] ? mixin : method(k)
