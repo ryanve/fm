@@ -35,6 +35,16 @@
   function extra(f, a) {
     if (a.length > f.length) return slice.call(a, f.length)
   }
+  
+  /** 
+   * @param {Array} a
+   * @param {Array|Arguments} args
+   * @return {Array}
+   */
+  function append(a, args) {
+    push.apply(a = a.slice(), args)
+    return a
+  }
 
   /** 
    * @param {Function} f
@@ -44,9 +54,7 @@
   function bind(f, scope) {
     var rest = extra(bind, arguments)
     return rest ? function() {
-      var a = rest.slice()
-      push.apply(a, arguments)
-      return f.apply(scope, a)
+      return f.apply(scope, append(rest, arguments))
     } : function() {
       return f.apply(scope, arguments)
     }
@@ -59,9 +67,7 @@
   function partial(f) {
     var rest = extra(partial, arguments)
     return rest ? function() {
-      var a = rest.slice()
-      push.apply(a, arguments)
-      return f.apply(this, a)
+      return f.apply(this, append(rest, arguments))
     } : function() {
       return f.apply(this, arguments)
     }
