@@ -16,6 +16,7 @@ $ npm install fm --save
 - [<b>.stat()</b>](#stat)
 - [<b>.flow()</b>](#flow)
 - [<b>.constant()</b>](#constant)
+- [<b>.eq()</b>](#eq)
 - [<b>.got()</b>](#got)
 - [<b>.mixin()</b>](#mixin)
 
