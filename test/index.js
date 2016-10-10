@@ -17,7 +17,7 @@
   aok('#late(method)', 1 === fm.late(0).call([fm.constant(1)]))
   aok('#late(function)', fm.late === fm.late(fm.late))
   aok('.late()', fm.late === fm('late').late().call(fm, fm.late))
-  
+
   aok('#bind(f, scope)', function() {
     var bool, o = {}
     fm.bind(function(a) {
@@ -25,7 +25,7 @@
     }, o)(1)
     return bool
   })
-  
+
   aok('#bind(f, scope, ...args)', function() {
     var bool, o = {}
     fm.bind(function() {
@@ -33,7 +33,7 @@
     }, o, 0, 1)(2, 3)
     return bool
   })
-  
+
   aok('#partial(f)', !fm.partial(fm.got)().length && '0,1' === fm.partial(fm.got)(0, 1).join())
   aok('#partial(f, ...args)', '0,1,2,3' === fm.partial(fm.got, 0, 1)(2, 3).join())
   aok('(f).partial', '0,1' === fm(fm.got).partial(0)(1).join())
@@ -43,14 +43,17 @@
   aok('#slice(f, start, end)', '1' === fm.slice(fm.got, 1, -1)(0, 1, 2).join())
   aok('(f).slice()', '0,1,2' === fm(fm.got).slice()(0, 1, 2).join())
   aok('(f).slice(start)', '1,2' === fm(fm.got).slice(1)(0, 1, 2).join())
-  
+
   aok('#stat', function() {
     var a = [0, 1, 2, 3, 4]
     return a.slice(1, 3).join() === fm.stat(a.slice)(a, 1, 3).join()
   })
-  
+
   aok('.stat', function() {
     var a = [0, 1, 2, 3, 4]
     return a.slice(1, 3).join() === fm(a.slice).stat()(a, 1, 3).join()
   })
+
+  aok('(f).flow(g)', fm(fm.constant(2)).flow(fm.constant(3))() === 3)
+  aok('(f).slice(start)', '1,2' === fm(fm.got).slice(1)(0, 1, 2).join())
 }(this);

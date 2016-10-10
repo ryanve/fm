@@ -8,8 +8,8 @@
     , slice = [].slice
     , push = [].push
     , owns = {}.hasOwnProperty
-    
-  /** 
+
+  /**
    * @constructor
    * @param {*=} value to wrap or Fm instance to clone
    */
@@ -18,15 +18,15 @@
     this[0] = value instanceof fm ? value[0] : value
   }
 
-  /** 
+  /**
    * @param {*=} value to wrap or Fm instance to clone
    * @return {Fm} an Fm instance
    */
   function fm(value) {
     return new Fm(value)
   }
-  
-  /** 
+
+  /**
    * @param {Function} f
    * @param {Array|Arguments} a
    * @return {Array|undefined}
@@ -34,8 +34,8 @@
   function extra(f, a) {
     if (a.length > f.length) return slice.call(a, f.length)
   }
-  
-  /** 
+
+  /**
    * @param {Array} a
    * @param {Array|Arguments} args
    * @return {Array}
@@ -45,7 +45,7 @@
     return a
   }
 
-  /** 
+  /**
    * @param {Function} f
    * @param {*=} scope
    * @return {Function}
@@ -59,7 +59,7 @@
     }
   }
 
-  /** 
+  /**
    * @param {Function} f
    * @return {Function}
    */
@@ -71,8 +71,8 @@
       return f.apply(this, arguments)
     }
   }
-  
-  /** 
+
+  /**
    * @param {*} method name
    * @return {Function}
    */
@@ -81,8 +81,8 @@
       return this[method].apply(this, arguments)
     }
   }
-  
-  /** 
+
+  /**
    * @param {*=} value
    * @return {Function}
    */
@@ -91,12 +91,23 @@
       return value
     }
   }
-  
+
   /**
    * @return {Array}
    */
   function got() {
     return slice.call(arguments)
+  }
+
+  /**
+   * @param {Function} first
+   * @param {Function} next
+   * @return {Function}
+   */
+  function flow(first, next) {
+    return function() {
+      return next.call(this, first.apply(this, arguments))
+    }
   }
 
   /**
@@ -115,8 +126,8 @@
     }
     return this
   }
-  
-  /** 
+
+  /**
    * @param {string|number} name
    * @return {Function}
    */
@@ -127,8 +138,8 @@
       return fm[name].apply(fm, a)
     }
   }
-  
-  /** 
+
+  /**
    * @param {Function} f
    * @return {Function}
    */
@@ -146,5 +157,6 @@
   fm['mixin'] = mixin
   fm['partial'] = partial
   fm['stat'] = partial(bind, fm.call)
+  fm['flow'] = flow
   return fm['mixin'](fm)
 });

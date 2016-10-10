@@ -14,6 +14,7 @@ $ npm install fm --save
 - [<b>.partial()</b>](#partial)
 - [<b>.slice()</b>](#slice)
 - [<b>.stat()</b>](#stat)
+- [<b>.flow()</b>](#flow)
 - [<b>.constant()</b>](#constant)
 - [<b>.got()</b>](#got)
 - [<b>.mixin()</b>](#mixin)
@@ -85,6 +86,16 @@ fm.slice(fm.got, 1, 2)('a', 'b', 'c') // => ['b']
 ```js
 fm.stat([].slice) // => static slice() function
 fm.stat({}.hasOwnProperty) // => static has() function
+```
+
+### .flow()
+#### `fm.flow(first, next)`
+#### `fm(first).flow(next)`
+- Create a new function that invokes the next function with the result the first function
+&rarr; <b>function</b>
+
+```js
+fm.flow(fm.constant(2), fm.constant(3))()// => 3
 ```
 
 ### .constant()
