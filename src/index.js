@@ -5,9 +5,9 @@
 
   fm.prototype = Fm.prototype
   var globe = this
-    , slice = [].slice
-    , push = [].push
-    , owns = {}.hasOwnProperty
+  var slice = [].slice
+  var push = [].push
+  var owns = {}.hasOwnProperty
 
   /**
    * @constructor
