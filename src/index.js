@@ -7,7 +7,6 @@
   var globe = this
   var slice = [].slice
   var push = [].push
-  var owns = {}.hasOwnProperty
 
   /**
    * @constructor
@@ -130,7 +129,7 @@
     var pro = typeof to == 'function' && to.prototype
     if (to == globe) throw new TypeError('@this')
     for (var k in from) {
-      if (owns.call(from, k)) {
+      if (from.hasOwnProperty(k)) {
         to[k] = from[k]
         if (pro) pro[k] = mixin === from[k] ? mixin : method(k)
       }
