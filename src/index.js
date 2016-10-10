@@ -100,6 +100,17 @@
   }
 
   /**
+   * @param {Function} f
+   * @param {Number} i
+   * @return {Function}
+   */
+  function eq(f, i) {
+    return function() {
+      return f.call(this, arguments[i < 0 ? i + arguments.length : i])
+    }
+  }
+
+  /**
    * @param {Function} first
    * @param {Function} next
    * @return {Function}
@@ -150,6 +161,7 @@
     }
   }
 
+  fm['eq'] = eq
   fm['bind'] = bind
   fm['constant'] = constant
   fm['got'] = got

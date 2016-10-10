@@ -54,5 +54,7 @@
     return a.slice(1, 3).join() === fm(a.slice).stat()(a, 1, 3).join()
   })
 
+  aok('#eq(f, index)', fm.eq(Number, 1)(10, 11, 12) === 11)
+  aok('#eq(f, -index)', fm.eq(Number, -1)(10, 11, 12) === 12)
   aok('(f).flow(g)', fm(fm.constant(2)).flow(fm.constant(3))() === 3)
 }(this);
