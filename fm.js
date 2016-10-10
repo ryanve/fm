@@ -1,5 +1,5 @@
 /*!
- * fm 0.5.0+201607112202
+ * fm 0.6.0+201610100756
  * https://github.com/ryanve/fm
  * @license MIT
  */
@@ -10,11 +10,10 @@
 
   fm.prototype = Fm.prototype
   var globe = this
-    , slice = [].slice
-    , push = [].push
-    , owns = {}.hasOwnProperty
-    
-  /** 
+  var slice = [].slice
+  var push = [].push
+
+  /**
    * @constructor
    * @param {*=} value to wrap or Fm instance to clone
    */
@@ -23,15 +22,15 @@
     this[0] = value instanceof fm ? value[0] : value
   }
 
-  /** 
+  /**
    * @param {*=} value to wrap or Fm instance to clone
    * @return {Fm} an Fm instance
    */
   function fm(value) {
     return new Fm(value)
   }
-  
-  /** 
+
+  /**
    * @param {Function} f
    * @param {Array|Arguments} a
    * @return {Array|undefined}
@@ -39,8 +38,8 @@
   function extra(f, a) {
     if (a.length > f.length) return slice.call(a, f.length)
   }
-  
-  /** 
+
+  /**
    * @param {Array} a
    * @param {Array|Arguments} args
    * @return {Array}
@@ -50,7 +49,7 @@
     return a
   }
 
-  /** 
+  /**
    * @param {Function} f
    * @param {*=} scope
    * @return {Function}
@@ -64,7 +63,7 @@
     }
   }
 
-  /** 
+  /**
    * @param {Function} f
    * @return {Function}
    */
@@ -76,8 +75,8 @@
       return f.apply(this, arguments)
     }
   }
-  
-  /** 
+
+  /**
    * @param {*} method name
    * @return {Function}
    */
@@ -86,8 +85,8 @@
       return this[method].apply(this, arguments)
     }
   }
-  
-  /** 
+
+  /**
    * @param {*=} value
    * @return {Function}
    */
@@ -96,12 +95,34 @@
       return value
     }
   }
-  
+
   /**
    * @return {Array}
    */
   function got() {
     return slice.call(arguments)
+  }
+
+  /**
+   * @param {Function} f
+   * @param {Number} i
+   * @return {Function}
+   */
+  function eq(f, i) {
+    return function() {
+      return f.call(this, arguments[i < 0 ? i + arguments.length : i])
+    }
+  }
+
+  /**
+   * @param {Function} first
+   * @param {Function} next
+   * @return {Function}
+   */
+  function flow(first, next) {
+    return function() {
+      return next.call(this, first.apply(this, arguments))
+    }
   }
 
   /**
@@ -113,15 +134,15 @@
     var pro = typeof to == 'function' && to.prototype
     if (to == globe) throw new TypeError('@this')
     for (var k in from) {
-      if (owns.call(from, k)) {
+      if (from.hasOwnProperty(k)) {
         to[k] = from[k]
         if (pro) pro[k] = mixin === from[k] ? mixin : method(k)
       }
     }
     return this
   }
-  
-  /** 
+
+  /**
    * @param {string|number} name
    * @return {Function}
    */
@@ -132,8 +153,8 @@
       return fm[name].apply(fm, a)
     }
   }
-  
-  /** 
+
+  /**
    * @param {Function} f
    * @return {Function}
    */
@@ -144,6 +165,7 @@
     }
   }
 
+  fm['eq'] = eq
   fm['bind'] = bind
   fm['constant'] = constant
   fm['got'] = got
@@ -151,5 +173,6 @@
   fm['mixin'] = mixin
   fm['partial'] = partial
   fm['stat'] = partial(bind, fm.call)
+  fm['flow'] = flow
   return fm['mixin'](fm)
 });
