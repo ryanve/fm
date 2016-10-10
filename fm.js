@@ -1,8 +1,3 @@
-/*!
- * fm 0.6.0+201610100756
- * https://github.com/ryanve/fm
- * @license MIT
- */
 !function(root, name, make) {
   if (typeof module != 'undefined' && module.exports) module.exports = make();
   else root[name] = make();

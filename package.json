@@ -1,23 +1,42 @@
 {
   "name": "fm",
-  "description": "function modulation utility module",
-  "version": "0.6.0",
+  "description": "Function modulation utility module",
+  "version": "0.7.0",
   "homepage": "https://github.com/ryanve/fm",
   "license": "MIT",
   "author": "Ryan Van Etten",
-  "keywords": ["util", "function", "functions", "functional", "method", "bind", "partial", "ender"],
-  "main": "./fm.js",
+  "main": "fm.js",
+  "scripts": {
+    "pretest": "jshint fm.js && jshint test.js",
+    "test": "node test.js"
+  },
+  "keywords": [
+    "util",
+    "utility",
+    "callback",
+    "function",
+    "functions",
+    "functional",
+    "partial",
+    "method",
+    "scope",
+    "flow",
+    "bind",
+    "ender",
+    "browser",
+    "server"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/ryanve/fm.git"
   },
+  "bugs": {
+    "url": "https://github.com/ryanve/fm/issues"
+  },
   "dependencies": {},
-  "optionalDependencies": {},
   "devDependencies": {
     "aok": "^1.9.0",
-    "universal": "^0.1.1",
-    "grunt-contrib-concat": "^1.0.1",
-    "grunt-contrib-jshint": "^1.0.0"
+    "jshint": "^2.9.3"
   },
   "jshintConfig": {
     "asi": true,

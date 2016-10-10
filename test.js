@@ -1,11 +1,14 @@
 !function(root) {
   var common = typeof module != 'undefined' && !!module.exports
-  var aok = common ? require('../node_modules/aok') : root.aok
-  var fm = common ? require('../src') : root.fm
+  var aok = common ? require('aok') : root.aok
+  var fm = common ? require('./') : root.fm
   var join = fm.bind(fm.call, [].join)
   var keys = Object.keys
 
-  aok.prototype.fail = 'FAIL'
+  aok.prototype.fail = function() {
+    throw new Error(this.id)
+  }
+
   if (!keys) aok.prototype.express = aok.info // alert in IE8
 
   aok('instance', fm() instanceof fm)
