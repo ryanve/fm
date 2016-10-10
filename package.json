@@ -5,7 +5,7 @@
   "homepage": "https://github.com/ryanve/fm",
   "license": "MIT",
   "author": "Ryan Van Etten",
-  "keywords": ["util", "function", "functions", "method", "bind", "partial", "ender"],
+  "keywords": ["util", "function", "functions", "functional", "method", "bind", "partial", "ender"],
   "main": "./fm.js",
   "repository": {
     "type": "git",
