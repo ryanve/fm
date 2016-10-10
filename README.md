@@ -113,8 +113,8 @@ fm.constant(true)() // => true
 ### .eq()
 #### `fm.eq(callback, index)`
 #### `fm(callback).eq(index)`
-- Reduce the arguments passed to <var>callback</var> to the argument at the specified index
-&rarr; <b>function</b>
+&rarr; <b>function</b> that reduces the arguments passed to <var>callback</var> to the argument at the specified index
+
 
 ```js
 fm.eq(Number, 1)(10, 11, 12) // => 11
