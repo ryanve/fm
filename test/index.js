@@ -55,5 +55,4 @@
   })
 
   aok('(f).flow(g)', fm(fm.constant(2)).flow(fm.constant(3))() === 3)
-  aok('(f).slice(start)', '1,2' === fm(fm.got).slice(1)(0, 1, 2).join())
 }(this);
