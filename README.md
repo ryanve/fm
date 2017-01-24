@@ -1,14 +1,11 @@
 # fm
-#### JavaScript [function modulation](#api) utility module
+#### JavaScript function modulation module
 
-```sh
-$ npm install fm --save
+```
+npm install fm --save
 ```
 
-<a name="api"></a>
 ## API
-
-<a name="methods"></a>
 - [<b>.late()</b>](#late)
 - [<b>.bind()</b>](#bind)
 - [<b>.partial()</b>](#partial)
@@ -21,6 +18,7 @@ $ npm install fm --save
 - [<b>.mixin()</b>](#mixin)
 
 * * *
+
 - methods can be used statically or via [OO syntax](#oo)
 
 <a name="oo"></a>
@@ -135,21 +133,14 @@ fm.got(0, 1, 2) // => [0, 1, 2]
 #### `fm.mixin(object)`
 &rarr; <b>this</b>
 
-## Compatibility
+## Coverage
 Works...everywhere<b>!</b> Tested in node, Chrome, FF, Opera, IE
 
 ## Contribute
-Make edits in [/<b>src</b>](./src). Run [tests](test) in [node](#cli) or in the [browser](test/index.html).
-
-<a name="cli"></a>
-```sh
-$ npm install -g grunt-cli # install grunt-cli if you haven't already
-$ npm install # install devDependencies from package.json
-$ grunt test # run tests
+```
+npm install
+npm test
 ```
 
-## Fund
-<b>[Tip the developer](https://www.gittip.com/ryanve/)</b> =)
-
-## License
-MIT
+## Playground
+[Try `fm` in your browser](http://ryanve.github.io/fm/)
