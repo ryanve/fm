@@ -1,0 +1,39 @@
+html { background: #00e; color: Salmon; }
+.link { background: Salmon; color: Black; }
+:focus { outline-color: Black; }
+
+* { box-sizing: border-box; }
+html { font: 1.125em/2 sans-serif; }
+body { width: 100%; margin: auto; }
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.text {
+  line-height: 1;
+  font-size: 8em;
+  margin: 0;
+}
+
+.link {
+  display: inline-block;
+  line-height: 1;
+  font-size: 1em;
+  padding: 1em;
+  margin-bottom: .5rem;
+}
+
+.link:not(:hover) {
+  text-decoration: none;
+}
+
+@media (max-width: 17em) {
+  html {
+    font-size: .875em;
+  }
+}
